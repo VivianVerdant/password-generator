@@ -19,13 +19,13 @@
         const symbolGroupChars = "@#$()<>[]{}^&~+-*/%=\\?!_.,:;";
 
 
-        onLoad() => {
+        function onLoad() {
             generateAsWord();
             generateParameterized();
         }
 
 
-        generateAsWord() => {
+        function generateAsWord() {
             const length = document.getElementById("word-length").value;
             const generator = function () {
                 return generatePasswordAsWord(length);
