@@ -7,41 +7,42 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="bootstrap.min.css">
+    <link rel="prefetch" href="eff_short_wordlist_2_1.txt">
 
     <script type="text/javascript">
-        var digitGroupChars = "0123456789";
-        var consonantGroupChars = "bcdfghjklmnpqrstvwxz";
-        var vowelGroupChars = "aeiouy";
-        var letterGroupChars = consonantGroupChars + vowelGroupChars;
-        var symbolGroupChars = "@#$()<>[]{}^&~+-*/%=\\?!_.,:;";
+        const wordList = readFileSync("eff_short_wordlist_2_1.txt", ‘utf-8’).split(‘,’);
+        const digitGroupChars = "0123456789";
+        const consonantGroupChars = "bcdfghjklmnpqrstvwxz";
+        const vowelGroupChars = "aeiouy";
+        const letterGroupChars = consonantGroupChars + vowelGroupChars;
+        const symbolGroupChars = "@#$()<>[]{}^&~+-*/%=\\?!_.,:;";
 
 
-        function onLoad() {
+        onLoad() => {
             generateAsWord();
             generateParameterized();
         }
 
 
-        function generateAsWord() {
-            var length = document.getElementById("word-length").value;
-            var generator = function () {
+        generateAsWord() => {
+            const length = document.getElementById("word-length").value;
+            const generator = function () {
                 return generatePasswordAsWord(length);
             }
 
-            var count = document.getElementById("word-count").value;
-            var passwords = generatePasswordArray(count, generator);
+            const count = document.getElementById("word-count").value;
+            const passwords = generatePasswordArray(count, generator);
 
-            var target = document.getElementById("word-container");
+            const target = document.getElementById("word-container");
             target.innerHTML = passwordsToHtmlList(passwords);
         }
 
         function generatePasswordAsWord(length) {
-            var s = generatePasswordCore(consonantGroupChars.toUpperCase());
+            const s = generatePasswordCore(consonantGroupChars.toUpperCase());
 
-            for (var i = 1; i < length - 1; i++) {
-                var pattern = (i % 2 === 0) ? consonantGroupChars : vowelGroupChars;
+            for (let i = 1; i < length - 1; i++) {
+                const pattern = (i % 2 === 0) ? consonantGroupChars : vowelGroupChars;
                 s += generatePasswordCore(pattern);
             }
 
@@ -52,20 +53,20 @@
 
 
         function generateParameterized() {
-            var locase = document.getElementById("lower-case-factor").value;
-            var upcase = document.getElementById("upper-case-factor").value;
-            var digits = document.getElementById("digits-factor").value;
-            var symbols = document.getElementById("symbols-factor").value;
-            var chars = getChars(locase, upcase, digits, symbols);
+            const locase = document.getElementById("lower-case-factor").value;
+            const upcase = document.getElementById("upper-case-factor").value;
+            const digits = document.getElementById("digits-factor").value;
+            const symbols = document.getElementById("symbols-factor").value;
+            const chars = getChars(locase, upcase, digits, symbols);
 
-            var length = document.getElementById("generic-length").value;
+            const length = document.getElementById("generic-length").value;
 
-            var generator = function () {
+            const generator = function () {
                 return generatePasswordCore(chars, length);
             }
 
-            var count = document.getElementById("generic-count").value;
-            var passwords = generatePasswordArray(count, generator);
+            const count = document.getElementById("generic-count").value;
+            const passwords = generatePasswordArray(count, generator);
 
             var target = document.getElementById("generic-container");
             target.innerHTML = passwordsToHtmlList(passwords);
@@ -79,12 +80,12 @@
                 symbolsFactor = 1;
             }
 
-            var maxFactor = Math.max(locaseFactor, upcaseFactor, digitsFactor, symbolsFactor);
-            var upcaseGroupChars = letterGroupChars.toUpperCase();
+            const maxFactor = Math.max(locaseFactor, upcaseFactor, digitsFactor, symbolsFactor);
+            const upcaseGroupChars = letterGroupChars.toUpperCase();
 
-            var result = [];
+            const result = [];
 
-            for (var i = 0; i < maxFactor; i++) {
+            for (let i = 0; i < maxFactor; i++) {
                 if (i < digitsFactor) {
                     result.push(digitGroupChars);
                 }
@@ -108,12 +109,12 @@
         function generatePasswordCore(chars, length) {
             length = length || 1;
 
-            var array = new Uint16Array(length);
+            const array = new Uint16Array(length);
             getCrypto().getRandomValues(array);
 
-            var res = "";
-            for (var i = 0; i < length; i++) {
-                var r = array[i] % chars.length;
+            let res = "";
+            for (let i = 0; i < length; i++) {
+                const r = array[i] % chars.length;
                 res += chars.substring(r, r + 1);
             }
 
@@ -124,7 +125,7 @@
         }
 
         function getCrypto() {
-            var cryptoObj = window.crypto || window.msCrypto;
+            const cryptoObj = window.crypto || window.msCrypto;
 
             if (cryptoObj == null) {
                 alert("Sorry, but your browser does not support cryptography API.");
@@ -135,9 +136,9 @@
 
 
         function generatePasswordArray(count, generator) {
-            var a = [];
+            let a = [];
 
-            for (var i = 0; i < count; i++) {
+            for (let i = 0; i < count; i++) {
                 a.push(generator());
             }
 
@@ -145,7 +146,7 @@
         }
 
         function passwordsToHtmlList(passwords) {
-            var result = "<ul>";
+            let result = "<ul>";
 
             passwords.forEach(function (p) {
                 result += "<li><samp>" + p + "</samp></li>";
