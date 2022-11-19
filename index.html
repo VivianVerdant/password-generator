@@ -41,7 +41,7 @@
         }
 
         function generatePasswordAsWord(length) {
-            const s = generatePasswordCore(consonantGroupChars.toUpperCase());
+            let s = generatePasswordCore(consonantGroupChars.toUpperCase());
 
             for (let i = 1; i < length - 1; i++) {
                 const pattern = (i % 2 === 0) ? consonantGroupChars : vowelGroupChars;
