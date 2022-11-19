@@ -8,10 +8,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
 
     <link rel="stylesheet" href="bootstrap.min.css">
-    <link rel="prefetch" href="eff_short_wordlist_2_1.txt">
 
     <script type="text/javascript">
-        const wordList = readFileSync("eff_short_wordlist_2_1.txt", 'utf-8').split(',');
+        fetch("eff_short_wordlist_2_1.txt")
+            .then( response => response.text() )
+            .then( text => console.log(text.slice(0,30)) );
+        
         const digitGroupChars = "0123456789";
         const consonantGroupChars = "bcdfghjklmnpqrstvwxz";
         const vowelGroupChars = "aeiouy";
